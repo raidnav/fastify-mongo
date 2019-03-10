@@ -1,51 +1,51 @@
-const boom = require('boom');
-const Car = require('../models/car');
+import { boomify } from 'boom';
+import Car, { find, findById, findByIdAndUpdate, findByIdAndRemove } from '../models/car';
 
-exports.getCars = async (req, res) => {
+export async function getCars(req, res) {
   try {
-    const cars = await Car.find();
+    const cars = await find();
     return cars;
   } catch (err) {
-    throw boom.boomify(err);
+    throw boomify(err);
   }
 }
 
-exports.getSingleCars = async (req, res) => {
+export async function getSingleCars(req, res) {
   try {
     const id = req.params.id;
-    const car = await Car.findById(id);
+    const car = await findById(id);
   } catch (err) {
-    throw boom.boomify(err);
+    throw boomify(err);
   }
 }
 
-exports.addCar = async (req, res) => {
+export async function addCar(req, res) {
   try {
     const car = new Car(req.body);
     return car.save();
   } catch (err) {
-    throw boom.boomify(err);
+    throw boomify(err);
   }
 }
 
-exports.updateCar = async (req, res) => {
+export async function updateCar(req, res) {
   try {
     const id = req.params.id;
     const car = req.body;
     const { ...updateData } = car;
-    const update = await Car.findByIdAndUpdate(id, updateData, { new: true });
+    const update = await findByIdAndUpdate(id, updateData, { new: true });
     return update;
   } catch (err) {
-    throw boom.boomify(err);
+    throw boomify(err);
   }
 }
 
-exports.deleteCar = async (req, res) => {
+export async function deleteCar(req, res) {
   try {
     const id = req.params.id;
-    const car = await Car.findByIdAndRemove(id);
+    const car = await findByIdAndRemove(id);
     return car;
   } catch (err) {
-    throw boom.boomify(err);
+    throw boomify(err);
   }
 }

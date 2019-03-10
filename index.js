@@ -1,18 +1,17 @@
-const mongoose = require('mongoose');
-const routes = require('./routes');
-const swagger = require('./config/swagger');
+import { connect } from 'mongoose';
+import { options } from './config/swagger';
 
 const fastify = require('fastify')({
   logger: true
 });
 
-fastify.register(require('fastify-swagger'), swagger.options);
+fastify.register(require('fastify-swagger'), options);
 
-mongoose.connect(`mongodb://localhost/mycargarage`)
+connect(`mongodb://localhost/mycargarage`)
   .then(() => console.log(`MongoDB connected...`))
   .catch(err => console.log(err));
 
-routes.forEach((route, index) => {
+forEach((route, index) => {
   fastify.route(route)
 });
 

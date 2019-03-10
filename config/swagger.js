@@ -1,4 +1,4 @@
-exports.options = {
+export const options = {
   routePrefix: '/documentation',
   exposeRoute: true,
   swagger: {
